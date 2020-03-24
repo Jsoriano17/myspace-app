@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { AuthConsumer, } from "../providers/AuthProvider";
-import { Menu, } from 'semantic-ui-react'
-import { Link, withRouter, } from 'react-router-dom'
+import { Menu, } from 'semantic-ui-react';
+import { Link, withRouter, } from 'react-router-dom';
+import styled from 'styled-components';
+import Logo from '../myspace.svg'
 
 class Navbar extends React.Component {
   
@@ -10,8 +12,8 @@ class Navbar extends React.Component {
     
     if (user) {
       return (
-        <Menu.Menu position='right'>
-          <Menu.Item
+        <Menu.Menu>
+          <Menu.Item as={MenuFont}
             name='logout'
             onClick={ () => handleLogout(this.props.history) }
           />
@@ -19,16 +21,16 @@ class Navbar extends React.Component {
       )
     } else {
       return (
-        <Menu.Menu position='right'>
+        <Menu.Menu>
           <Link to='/login'>
-            <Menu.Item
+            <Menu.Item as={MenuFont}
               id='login'
               name='login'
               active={location.pathname === '/login'}
             />
           </Link>
           <Link to='/register'>
-            <Menu.Item
+            <Menu.Item as={MenuFont}
               id='register'
               name='register'
               active={location.pathname === '/register'}
@@ -42,9 +44,10 @@ class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <Menu pointing secondary>
+        <Menu pointing secondary vertical as={MenuStyle} floated='left'>
+        <img src={Logo} alt="Logo" />
           <Link to='/'>
-            <Menu.Item
+            <Menu.Item as={MenuFont}
               name='home'
               id='home'
               active={this.props.location.pathname === '/'}
@@ -68,5 +71,14 @@ export class ConnectedNavbar extends React.Component {
     )
   }
 }
+const MenuStyle = styled.div`
+  background: black !important;
+  font-family: 'Roboto', sans-serif !important;
+  height: 1000px !important;
+  width: 150px !important;
+`;
+const MenuFont = styled.div`
+ color: white !important;
+`;
 
 export default withRouter(ConnectedNavbar);

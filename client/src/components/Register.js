@@ -25,7 +25,7 @@ class Register extends React.Component {
     const { email, password, passwordConfirmation, } = this.state;
     
     return (
-      <Segment basic>
+      <Segment basic  floated='center'>
         <Header as='h1' textAlign='center'>Register</Header>
         <Form onSubmit={this.handleSubmit}>
           <Form.Input

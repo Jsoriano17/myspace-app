@@ -20,7 +20,7 @@ class Login extends React.Component {
     const { email, password, } = this.state;
   
     return (
-      <Segment basic>
+      <Segment basic  floated='center'>
         <Header as='h1' textAlign='center'>Login</Header>
         <Form onSubmit={this.handleSubmit}>
           <Form.Input
@@ -49,6 +49,7 @@ class Login extends React.Component {
     )
   }
 }
+
 
 export default class ConnectedLogin extends React.Component {
   render() {
