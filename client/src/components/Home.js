@@ -34,7 +34,7 @@ class Home extends React.Component {
         <Header as="h3" floated='left' textAlign="center">MySpace</Header>
        
         {/* <Button as={Link} to='/post/form' color='green' >Create Post</Button> */}
-        {/* <PostForm /> */}
+        <PostForm />
       </>
     )
   }
