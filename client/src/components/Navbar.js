@@ -6,16 +6,16 @@ import styled from 'styled-components';
 import Logo from '../myspace.svg'
 
 class Navbar extends React.Component {
-  
+
   rightNavItems = () => {
     const { auth: { user, handleLogout, }, location, } = this.props;
-    
+
     if (user) {
       return (
         <Menu.Menu>
           <Menu.Item as={MenuFont}
             name='logout'
-            onClick={ () => handleLogout(this.props.history) }
+            onClick={() => handleLogout(this.props.history)}
           />
         </Menu.Menu>
       )
@@ -40,12 +40,14 @@ class Navbar extends React.Component {
       )
     }
   }
-  
+
   render() {
     return (
       <div>
         <Menu pointing secondary vertical as={MenuStyle} floated='left'>
-        <img src={Logo} alt="Logo" />
+          <Menu.Item>
+            <img src={Logo} alt="Logo" />
+          </Menu.Item>
           <Link to='/'>
             <Menu.Item as={MenuFont}
               name='home'
@@ -53,7 +55,14 @@ class Navbar extends React.Component {
               active={this.props.location.pathname === '/'}
             />
           </Link>
-            { this.rightNavItems() }
+          <Link to='/user/account'>
+            <Menu.Item as={MenuFont}
+              name='Account'
+              id='Account'
+              active={this.props.location.pathname === '/user/account'}
+            />
+          </Link>
+          {this.rightNavItems()}
         </Menu>
       </div>
     )
@@ -63,9 +72,9 @@ class Navbar extends React.Component {
 export class ConnectedNavbar extends React.Component {
   render() {
     return (
-      <AuthConsumer> 
-        { auth => 
-          <Navbar { ...this.props } auth={auth} />
+      <AuthConsumer>
+        {auth =>
+          <Navbar {...this.props} auth={auth} />
         }
       </AuthConsumer>
     )
