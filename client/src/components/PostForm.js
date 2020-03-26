@@ -1,52 +1,65 @@
-import React from 'react';
-import { AuthConsumer, } from "../providers/AuthProvider";
-import { Button, Form, Segment, Header, } from 'semantic-ui-react';
+import React from "react";
+import { Form, Header, Button } from "semantic-ui-react";
+import axios from "axios";
 
-export default class PostForm extends React.Component {
-  state = { name: '', body: '' }
-  
-  handleSubmit = (e) => {
+class PostForm extends React.Component {
+  defaultValues = { 
+    name: "",
+    body: "",
+  };
+  state = { ...this.defaultValues };
+
+  handleSubmit = e => {
     e.preventDefault();
-    const { name, body, } = this.state;
-    // this.props.auth.handleLogin({ name, body, }, this.props.history);
-  }
-  
-  handleChange = (e) => {
-    const { name, value, } = e.target;
-    this.setState({ [name]: value, });
-  }
+    const post = { ...this.state };
+    axios.post(`/api/users/${this.state.current_user}/posts`, post).then(res => {
+      this.setState({ ...this.defaultValues });
+      this.props.history.push(`/`);
+    }).catch( (err) => {
+      console.log(err.response)
+  })
+
+  };
+
+  handleChange = e => {
+    const {
+      target: { name, value }
+    } = e;
+    this.setState({ [name]: value });
+  };
 
   render() {
-    const { name, body, } = this.state;
-  
+    const { name, body } = this.state;
+
     return (
-      <Segment basic  floated='center'>
-        <Header as='h1' textAlign='center'>Create Post</Header>
+      <div>
+        <Header as="h1">New Post</Header>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Input
-            label="Title"
-            autoFocus
-            required         
-            name='name'
-            value={name}
-            placeholder='title'
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            label="Description"
-            required
-            name='body'
-            value={body}
-            placeholder='Add Description'
-            type='text'
-            onChange={this.handleChange}
-          />
-          <Segment textAlign='center' basic>
-            <Button primary type='submit'>Submit</Button>
-          </Segment>
+          <Form.Group widths="equal">
+            <Form.Input
+              label="Name"
+              name="name"
+              placeholder="Name"
+              value={name}
+              onChange={this.handleChange}
+              required
+            />
+            <Form.Input
+              label="Description"
+              name="body"
+              placeholder="post desc"
+              value={body}
+              onChange={this.handleChange}
+              required
+            />
+
+          </Form.Group>
+          <Button color="blue">Submit</Button>
+          {/* <Form.Button color="blue">Submit</Form.Button> */}
         </Form>
-      </Segment>
-    )
+      </div>
+    );
   }
 }
 
+export default PostForm

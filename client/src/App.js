@@ -10,6 +10,8 @@ import { Container, } from "semantic-ui-react";
 import FetchUser from './components/FetchUser';
 import ProtectedRoute from './components/ProtectedRoute';
 import PostForm from './components/PostForm';
+import PostDelete from './components/PostDelete';
+import PostEdit from './components/PostEdit';
 
 const App = () => (
 <div>
@@ -23,6 +25,8 @@ const App = () => (
         <Route exact path="/register" component={Register} />
         <Route component={NoMatch} />
         <Route exact path="/post/form" component={PostForm} />
+        <Route exact path="/post/form" component={PostDelete} />
+        <Route exact path="/post/form" component={PostEdit} />
       </Switch>
     </Container>
   </FetchUser>

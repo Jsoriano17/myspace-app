@@ -1,44 +1,48 @@
 import React from 'react';
-import { Header, Button, Card, } from 'semantic-ui-react';
+import { Header, Button, Card, Segment, List, Container, } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PostForm from './PostForm';
 import axios from 'axios'
+import styled from 'styled-components';
 
 
 class Home extends React.Component {
-  state = { users: [], };
-  //get all the users 
+  state = { posts: [], };
+  // get all the users 
   componentDidMount() {
-    axios.get("/api/users")
-      .then(res => {
-        this.setState({ users: res.data, });
+    axios.get("/api/posts")
+      .then( res => {
+      this.setState({posts: res.data});
       })
   }
-  renderDepartments = () => {
-    const { users, } = this.state;
-
-    if (users.length <= 0)
-      return <h2>No users</h2>
-    return users.map( user => (
-      <Card key={`user-${user.id}`}>
-          <Card.Content>
-            <Card.Header>{user.username}</Card.Header>
-          </Card.Content>
-        </Card>
+  renderPosts = () => {
+    const { posts } = this.state
+    return posts.map( post => (
+      <Segment key={post.id} floated='left'>
+        <List.Header as="h3">{post.name}</List.Header>
+        <List.Description>
+          { post.body }
+        </List.Description>
+      </Segment>
     ))
   }
   // get all the posts
   render() {
     return (
-      <>
-        <Header as="h3" floated='left' textAlign="center">MySpace</Header>
-       
+      <HomeStyle>
+        <br/>
+        <h1>MySpace Posts</h1>
+        <h5>(run db:seed)</h5>
+        <br/>
+        {this.renderPosts()}
         {/* <Button as={Link} to='/post/form' color='green' >Create Post</Button> */}
-        <PostForm />
-      </>
+      </HomeStyle>
     )
   }
 }
-
+const HomeStyle = styled.div`
+ position: absolute !important;
+ left: 200px !important;
+`;
 
 export default Home;
